@@ -1,0 +1,26 @@
+server:
+  port: 8181
+
+spring:
+  application:
+    name: demo-ZenBookings
+  datasource:
+    url: jdbc:postgresql://localhost:5432/zen_bookings
+    username: booking_user
+    password: 1234
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    defer-datasource-initialization: true
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+
+application:
+  security:
+    jwt:
+      secret-key: d5608c2a97c84dd0c0e0374ab865a131e0305df3f642ff83a03d796d748ac251
+      expiration: 86400000 # a day
