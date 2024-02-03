@@ -81,7 +81,7 @@ public record BookingController(
     @SecurityRequirement(name = "bearerAuth")
     public ResponseEntity<?> editBooking(@PathVariable("id") Integer id, @RequestBody BookingDto bookingDto) throws ZenBookingException {
         bookingService.editBooking(id, bookingDto);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     /**
@@ -96,6 +96,6 @@ public record BookingController(
     @SecurityRequirement(name = "bearerAuth")
     public ResponseEntity<?> removeBooking(@PathVariable("id") Integer id) throws ZenBookingException {
         bookingService.removeBooking(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

@@ -4,7 +4,9 @@ import com.ZenBookings.demoZenBookings.application.exception.ZenBookingException
 import com.ZenBookings.demoZenBookings.application.lasting.EMessage;
 import com.ZenBookings.demoZenBookings.application.mapper.SpaServiceMapper;
 import com.ZenBookings.demoZenBookings.domain.dto.SpaServiceDto;
+import com.ZenBookings.demoZenBookings.domain.dto.UserDto;
 import com.ZenBookings.demoZenBookings.domain.entity.SpaService;
+import com.ZenBookings.demoZenBookings.domain.entity.User;
 import com.ZenBookings.demoZenBookings.domain.repository.SpaServiceRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -32,6 +34,10 @@ public record SpaSService(
         SpaService spa = spaMapper.toEntity(spaDto);
         spaRepository.save(spa);
     }
+
+
+
+
 
     /**
      * recupera servicios de spa con paginación. Toma offset y limit como parámetros para especificar el
@@ -68,12 +74,22 @@ public record SpaSService(
         return spaMapper.toDto(spa);
     }
 
+
+
     public void editSpa(Integer id, SpaServiceDto spaDto) throws ZenBookingException {
-        spaRepository.findById(id)
+        SpaService existingSpa = spaRepository.findById(id)
                 .orElseThrow(() -> new ZenBookingException(EMessage.DATA_NOT_FOUND));
-        SpaService spa = spaMapper.toEntity(spaDto);
-        spaRepository.save(spa);
+
+        if (spaDto.name() != null) {
+            existingSpa.setName(spaDto.name());
+        }
+        if (spaDto.description() != null) {
+            existingSpa.setDescription(spaDto.description());
+        }
+        spaRepository.save(existingSpa);
     }
+
+
 
     /**
      * toma un id como entrada y trata de encontrar un SpaService con ese id en el spaRepository.

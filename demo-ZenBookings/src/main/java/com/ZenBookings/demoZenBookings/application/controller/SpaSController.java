@@ -83,7 +83,7 @@ public record SpaSController(
     public ResponseEntity<?> editSpa(@PathVariable("id") Integer id, @RequestBody SpaServiceDto spaDto) throws
             ZenBookingException {
         spaSService.editSpa(id, spaDto);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     /**
@@ -98,7 +98,7 @@ public record SpaSController(
     @SecurityRequirement(name = "bearerAuth")
     public ResponseEntity<?> removeSpa(@PathVariable("id") Integer id) throws ZenBookingException {
         spaSService.removeSpa(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }

@@ -69,12 +69,30 @@ public record UserService(
      * @throws ZenBookingException si no se encuentra el usuario
      */
 
+
     public void editUser(Integer id, UserDto userDto) throws ZenBookingException {
-        userRepository.findById(id)
+        User existingUser = userRepository.findById(id)
                 .orElseThrow(() -> new ZenBookingException(EMessage.DATA_NOT_FOUND));
-        User user = mapper.toEntity(userDto);
-        userRepository.save(user);
+
+        if (userDto.name() != null) {
+            existingUser.setName(userDto.name());
+        }
+        if (userDto.email() != null) {
+            existingUser.setEmail(userDto.email());
+        }
+        if (userDto.password() != null) {
+            existingUser.setPassword(userDto.password());
+        }
+        if (userDto.role() != null) {
+            existingUser.setRole(userDto.role());
+        }
+        if (userDto.enable() != null) {
+            existingUser.setEnable(userDto.enable());
+        }
+
+        userRepository.save(existingUser);
     }
+
 
     /**
      * toma un parámetro id de tipo Integer. Intenta encontrar un objeto User en el

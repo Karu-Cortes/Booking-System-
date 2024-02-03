@@ -3,6 +3,8 @@ package com.ZenBookings.demoZenBookings.application.service;
 import com.ZenBookings.demoZenBookings.application.exception.ZenBookingException;
 import com.ZenBookings.demoZenBookings.application.lasting.EMessage;
 import com.ZenBookings.demoZenBookings.application.mapper.BookingMapper;
+import com.ZenBookings.demoZenBookings.application.mapper.SpaServiceMapper;
+import com.ZenBookings.demoZenBookings.application.mapper.UserMapper;
 import com.ZenBookings.demoZenBookings.domain.dto.BookingDto;
 import com.ZenBookings.demoZenBookings.domain.entity.Booking;
 import com.ZenBookings.demoZenBookings.domain.repository.BookingRepository;
@@ -15,7 +17,9 @@ import java.util.List;
 @Service
 public record BookingService(
     BookingRepository bookingRepository,
-    BookingMapper bookingMapper
+    BookingMapper bookingMapper,
+    SpaServiceMapper spaServiceMapper,
+    UserMapper userMapper
 ) {
 
     /**
@@ -70,11 +74,36 @@ public record BookingService(
      * @param  id          el ID de la reserva que se va a editar
      * @param  bookingDto  los datos para actualizar la reserva
      */
+    //public void editBooking(Integer id, BookingDto bookingDto) throws ZenBookingException {
+      //  bookingRepository.findById(id).orElseThrow(() -> new ZenBookingException(EMessage.DATA_NOT_FOUND));
+       // Booking booking = bookingMapper.toEntity(bookingDto);
+       // bookingRepository.save(booking);
+   // }
+
     public void editBooking(Integer id, BookingDto bookingDto) throws ZenBookingException {
-        bookingRepository.findById(id).orElseThrow(() -> new ZenBookingException(EMessage.DATA_NOT_FOUND));
-        Booking booking = bookingMapper.toEntity(bookingDto);
-        bookingRepository.save(booking);
+        Booking existingBooking = bookingRepository.findById(id)
+                .orElseThrow(() -> new ZenBookingException(EMessage.DATA_NOT_FOUND));
+
+        // Actualiza los campos de existingBooking con los valores de bookingDto
+        if (bookingDto.date() != null) {
+            existingBooking.setDate(bookingDto.date());
+        }
+        if (bookingDto.phone() != null) {
+            existingBooking.setPhone(bookingDto.phone());
+        }
+        if (bookingDto.state() != null) {
+            existingBooking.setState(bookingDto.state());
+        }
+        if (bookingDto.spa() != null) {
+            existingBooking.setSpa(spaServiceMapper.toEntity(bookingDto.spa()));
+        }
+        if (bookingDto.user() != null) {
+            existingBooking.setUser(userMapper.toEntity(bookingDto.user()));
+        }
+
+        bookingRepository.save(existingBooking);
     }
+
 
     /**
      * eliminar una reserva por su ID. Primero intenta encontrar la reserva por su ID en el repositorio,
