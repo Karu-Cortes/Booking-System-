@@ -6,5 +6,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 public record SpaServiceDto(
          Integer id,
         String name,
-        String description) {
+        String description,
+        String imageUrl) {
 }

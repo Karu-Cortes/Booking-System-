@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-02-01T12:29:22-0500",
+    date = "2024-02-15T09:13:50-0500",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.1 (Oracle Corporation)"
 )
 @Component
@@ -26,6 +26,7 @@ public class SpaServiceMapperImpl implements SpaServiceMapper {
         spaService.id( dto.id() );
         spaService.name( dto.name() );
         spaService.description( dto.description() );
+        spaService.imageUrl( dto.imageUrl() );
 
         return spaService.build();
     }
@@ -39,12 +40,14 @@ public class SpaServiceMapperImpl implements SpaServiceMapper {
         Integer id = null;
         String name = null;
         String description = null;
+        String imageUrl = null;
 
         id = entity.getId();
         name = entity.getName();
         description = entity.getDescription();
+        imageUrl = entity.getImageUrl();
 
-        SpaServiceDto spaServiceDto = new SpaServiceDto( id, name, description );
+        SpaServiceDto spaServiceDto = new SpaServiceDto( id, name, description, imageUrl );
 
         return spaServiceDto;
     }

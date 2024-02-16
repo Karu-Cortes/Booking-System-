@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-02-01T12:29:23-0500",
+    date = "2024-02-15T09:13:50-0500",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.1 (Oracle Corporation)"
 )
 @Component
@@ -120,6 +120,7 @@ public class BookingMapperImpl implements BookingMapper {
         spaService.id( spaServiceDto.id() );
         spaService.name( spaServiceDto.name() );
         spaService.description( spaServiceDto.description() );
+        spaService.imageUrl( spaServiceDto.imageUrl() );
 
         return spaService.build();
     }
@@ -132,12 +133,14 @@ public class BookingMapperImpl implements BookingMapper {
         Integer id = null;
         String name = null;
         String description = null;
+        String imageUrl = null;
 
         id = spaService.getId();
         name = spaService.getName();
         description = spaService.getDescription();
+        imageUrl = spaService.getImageUrl();
 
-        SpaServiceDto spaServiceDto = new SpaServiceDto( id, name, description );
+        SpaServiceDto spaServiceDto = new SpaServiceDto( id, name, description, imageUrl );
 
         return spaServiceDto;
     }

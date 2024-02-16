@@ -33,7 +33,7 @@ public class SpaSServiceTest {
 
     @Test
     public void registerSpaTest() {
-        SpaServiceDto spaDto = new SpaServiceDto(1, "name", "description");
+        SpaServiceDto spaDto = new SpaServiceDto(1, "name", "description","url");
         SpaService spa = new SpaService();
         when(spaMapper.toEntity(spaDto)).thenReturn(spa);
         spaSService.registerSpa(spaDto);
@@ -52,7 +52,7 @@ public class SpaSServiceTest {
         Page<SpaService> spaPage = new PageImpl<>(spaList);
         when(spaRepository.findAll(pageable)).thenReturn(spaPage);
         List<SpaServiceDto> spaDtoList = new ArrayList<>();
-        spaDtoList.add(new SpaServiceDto(1, "name", "description"));
+        spaDtoList.add(new SpaServiceDto(1, "name", "description","url"));
         when(spaMapper.toDtoList(spaList)).thenReturn(spaDtoList);
         List<SpaServiceDto> result = spaSService.findAllSpa(offset, limit);
         verify(spaRepository).findAll(pageable);
@@ -65,7 +65,7 @@ public class SpaSServiceTest {
         Integer id = 1;
         SpaService spa = new SpaService();
         when(spaRepository.findById(id)).thenReturn(Optional.of(spa));
-        SpaServiceDto spaDto = new SpaServiceDto(1, "name", "description");
+        SpaServiceDto spaDto = new SpaServiceDto(1, "name", "description","url");
         when(spaMapper.toDto(spa)).thenReturn(spaDto);
         SpaServiceDto result = spaSService.findSpaById(id);
         verify(spaRepository).findById(id);
@@ -76,7 +76,7 @@ public class SpaSServiceTest {
     public void editSpaTest() throws ZenBookingException {
 
         Integer id = 1;
-        SpaServiceDto spaDto = new SpaServiceDto(1, "new name", "new description");
+        SpaServiceDto spaDto = new SpaServiceDto(1, "new name", "new description","url");
         SpaService existingSpa = new SpaService();
         when(spaRepository.findById(id)).thenReturn(Optional.of(existingSpa));
         spaSService.editSpa(id, spaDto);

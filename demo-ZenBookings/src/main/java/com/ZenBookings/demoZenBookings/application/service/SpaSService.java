@@ -84,6 +84,10 @@ public record SpaSService(
         if (spaDto.description() != null) {
             existingSpa.setDescription(spaDto.description());
         }
+        if (spaDto.imageUrl() != null) {
+            existingSpa.setImageUrl(spaDto.imageUrl());
+        }
+
         spaRepository.save(existingSpa);
     }
 

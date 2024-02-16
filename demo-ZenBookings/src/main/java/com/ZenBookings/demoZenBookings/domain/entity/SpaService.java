@@ -29,6 +29,7 @@ public class SpaService {
     private Integer id;
     private String name;
     private String description;
+    private String imageUrl;
 
     @OneToMany
     @ToString.Exclude

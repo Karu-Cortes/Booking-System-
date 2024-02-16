@@ -32,7 +32,7 @@ public class SpaSControllerTest {
 
     @Test
     public void testRegisterSpa() {
-        SpaServiceDto spaDto = new SpaServiceDto(1, "Test Spa", "Test Description");
+        SpaServiceDto spaDto = new SpaServiceDto(1, "Test Spa", "Test Description","url");
         doNothing().when(spaSService).registerSpa(spaDto);
         ResponseEntity<?> response = spaSController.registerSpa(spaDto);
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
@@ -41,7 +41,7 @@ public class SpaSControllerTest {
 
     @Test
     public void testFindAllSpa() throws ZenBookingException {
-        SpaServiceDto spaDto = new SpaServiceDto(1, "Test Spa", "Test Description");
+        SpaServiceDto spaDto = new SpaServiceDto(1, "Test Spa", "Test Description","url");
         List<SpaServiceDto> spaList = Collections.singletonList(spaDto);
         when(spaSService.findAllSpa(0, 10)).thenReturn(spaList);
         ResponseEntity<?> response = spaSController.findAllSpa(0, 10);
@@ -51,7 +51,7 @@ public class SpaSControllerTest {
     }
     @Test
     public void testFindSpaById() throws ZenBookingException {
-        SpaServiceDto spaDto = new SpaServiceDto(1, "Test Spa", "Test Description");
+        SpaServiceDto spaDto = new SpaServiceDto(1, "Test Spa", "Test Description","url");
         when(spaSService.findSpaById(1)).thenReturn(spaDto);
         ResponseEntity<?> response = spaSController.findSpaById(1);
         assertEquals(HttpStatus.FOUND, response.getStatusCode());
@@ -61,7 +61,7 @@ public class SpaSControllerTest {
 
     @Test
     public void testEditSpa() throws ZenBookingException {
-        SpaServiceDto spaDto = new SpaServiceDto(1, "Test Spa", "Test Description");
+        SpaServiceDto spaDto = new SpaServiceDto(1, "Test Spa", "Test Description","url");
         doNothing().when(spaSService).editSpa(1, spaDto);
         ResponseEntity<?> response = spaSController.editSpa(1, spaDto);
         assertEquals(HttpStatus.OK, response.getStatusCode());
