@@ -1,6 +1,7 @@
 package com.ZenBookings.demoZenBookings.domain.entity;
 
 import com.ZenBookings.demoZenBookings.application.lasting.ERole;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
@@ -42,7 +43,8 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private ERole role;
 
-    @OneToMany
+    @JsonManagedReference
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     @ToString.Exclude
     private List<Booking> bookings;
 

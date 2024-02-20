@@ -50,7 +50,7 @@ public record SpaSController(
             @PathVariable("offset") Integer offset,
             @PathVariable("limit") Integer limit) throws ZenBookingException {
         List<SpaServiceDto> spas = spaSService.findAllSpa(offset, limit);
-        return new ResponseEntity<>(spas, HttpStatus.FOUND);
+        return new ResponseEntity<>(spas, HttpStatus.OK);
     }
 
     /**

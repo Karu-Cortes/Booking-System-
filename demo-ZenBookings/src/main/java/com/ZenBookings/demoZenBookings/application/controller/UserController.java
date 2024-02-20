@@ -55,7 +55,7 @@ public record UserController(
             @PathVariable("offset") Integer offset,
             @PathVariable("limit") Integer limit) throws ZenBookingException {
         List<UserDto> users = userService.findAllUser(offset, limit);
-        return new ResponseEntity<>(users, HttpStatus.FOUND);
+        return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
     /**
@@ -70,7 +70,7 @@ public record UserController(
     @SecurityRequirement(name = "bearerAuth")
     public ResponseEntity<?> findUserById(@PathVariable("id") Integer id) throws ZenBookingException {
         UserDto user = userService.findUserById(id);
-        return new ResponseEntity<>(user, HttpStatus.FOUND);
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
     /**

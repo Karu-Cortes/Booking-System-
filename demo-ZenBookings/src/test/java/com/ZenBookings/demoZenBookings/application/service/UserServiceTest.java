@@ -38,7 +38,7 @@ public class UserServiceTest {
 
     @Test
     public void testRegisterUser() {
-        UserDto userDto = new UserDto(1, "test", "test@test.com", "password", null, true);
+        UserDto userDto = new UserDto(1, "test", "test@test.com", "password", null,null, true);
         User user = new User();
         when(userMapper.toEntity(userDto)).thenReturn(user);
         userService.registerUser(userDto);
@@ -50,7 +50,7 @@ public class UserServiceTest {
         User user = new User();
         List<User> userList = Collections.singletonList(user);
         Page<User> userPage = new PageImpl<>(userList);
-        UserDto userDto = new UserDto(1, "test", "test@test.com", "password", null, true);
+        UserDto userDto = new UserDto(1, "test", "test@test.com", "password", null,null, true);
         List<UserDto> userDtoList = Collections.singletonList(userDto);
         Pageable pageable = PageRequest.of(0, 1);
         when(userRepository.findAll(pageable)).thenReturn(userPage);
@@ -62,7 +62,7 @@ public class UserServiceTest {
     @Test
     public void testFindUserById() throws ZenBookingException {
         User user = new User();
-        UserDto userDto = new UserDto(1, "test", "test@test.com", "password", null, true);
+        UserDto userDto = new UserDto(1, "test", "test@test.com", "password", null, null,true);
         when(userRepository.findById(1)).thenReturn(Optional.of(user));
         when(userMapper.toDto(user)).thenReturn(userDto);
         userService.findUserById(1);
@@ -72,7 +72,7 @@ public class UserServiceTest {
     @Test
     public void testEditUser() throws ZenBookingException {
         User user = new User();
-        UserDto userDto = new UserDto(1, "test", "test@test.com", "password", null, true);
+        UserDto userDto = new UserDto(1, "test", "test@test.com", "password", null, null,true);
         when(userRepository.findById(1)).thenReturn(Optional.of(user));
         userService.editUser(1, userDto);
         verify(userRepository, times(1)).save(user);

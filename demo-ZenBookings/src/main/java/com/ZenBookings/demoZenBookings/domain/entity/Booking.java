@@ -1,6 +1,7 @@
 package com.ZenBookings.demoZenBookings.domain.entity;
 
 import com.ZenBookings.demoZenBookings.application.lasting.EState;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
@@ -35,6 +36,7 @@ public class Booking {
     @Enumerated(EnumType.STRING)
     private EState state;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "id_user")
     private User user;
@@ -42,6 +44,8 @@ public class Booking {
     @ManyToOne
     @JoinColumn(name = "id_spa")
     private SpaService spa;
+
+
 
     @Override
     public final boolean equals(Object o) {

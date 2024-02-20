@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-02-15T09:13:50-0500",
+    date = "2024-02-20T12:12:39-0500",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.1 (Oracle Corporation)"
 )
 @Component
@@ -106,6 +106,10 @@ public class BookingMapperImpl implements BookingMapper {
         user.password( userDto.password() );
         user.enable( userDto.enable() );
         user.role( userDto.role() );
+        List<Booking> list = userDto.bookings();
+        if ( list != null ) {
+            user.bookings( new ArrayList<Booking>( list ) );
+        }
 
         return user.build();
     }
@@ -155,6 +159,7 @@ public class BookingMapperImpl implements BookingMapper {
         String email = null;
         String password = null;
         ERole role = null;
+        List<Booking> bookings = null;
         Boolean enable = null;
 
         id = user.getId();
@@ -162,9 +167,13 @@ public class BookingMapperImpl implements BookingMapper {
         email = user.getEmail();
         password = user.getPassword();
         role = user.getRole();
+        List<Booking> list = user.getBookings();
+        if ( list != null ) {
+            bookings = new ArrayList<Booking>( list );
+        }
         enable = user.getEnable();
 
-        UserDto userDto = new UserDto( id, name, email, password, role, enable );
+        UserDto userDto = new UserDto( id, name, email, password, role, bookings, enable );
 
         return userDto;
     }

@@ -3,6 +3,7 @@ import com.ZenBookings.demoZenBookings.application.exception.ZenBookingException
 import com.ZenBookings.demoZenBookings.application.lasting.ERole;
 import com.ZenBookings.demoZenBookings.application.service.UserService;
 import com.ZenBookings.demoZenBookings.domain.dto.UserDto;
+import com.ZenBookings.demoZenBookings.domain.entity.Booking;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -39,8 +40,9 @@ public class UserControllerTest {
 
     @Test
     public void testRegisterUser() {
+        List<Booking> bookings = new ArrayList<>();
         UserDto userDto = new UserDto(1, "Test User", "test@test.com", "password",
-                ERole.USER, true);
+                ERole.USER, bookings, true);
         doNothing().when(userService).registerUser(userDto);
         ResponseEntity<?> responseEntity = userController.registerUser(userDto);
         assertEquals(HttpStatus.CREATED, responseEntity.getStatusCode());
@@ -48,10 +50,10 @@ public class UserControllerTest {
 
     @Test
     public void testFindAllUser() throws ZenBookingException {
-
+        List<Booking> bookings = new ArrayList<>();
         List<UserDto> userList = new ArrayList<>();
-        userList.add(new UserDto(1, "Test User1", "test1@test.com", "password1", ERole.USER, true));
-        userList.add(new UserDto(2, "Test User2", "test2@test.com", "password2", ERole.USER, true));
+        userList.add(new UserDto(1, "Test User1", "test1@test.com", "password1", ERole.USER,bookings,true));
+        userList.add(new UserDto(2, "Test User2", "test2@test.com", "password2", ERole.USER,bookings, true));
         when(userService.findAllUser(anyInt(), anyInt())).thenReturn(userList);
         ResponseEntity<?> responseEntity = userController.findAllUser(0, 2);
         assertEquals(HttpStatus.FOUND, responseEntity.getStatusCode());
@@ -59,7 +61,8 @@ public class UserControllerTest {
     }
     @Test
     public void testFindUserById() throws ZenBookingException {
-        UserDto userDto = new UserDto(1, "Test User", "test@test.com", "password", ERole.USER, true);
+        List<Booking> bookings = new ArrayList<>();
+        UserDto userDto = new UserDto(1, "Test User", "test@test.com", "password", ERole.USER, bookings,true);
         when(userService.findUserById(anyInt())).thenReturn(userDto);
         ResponseEntity<?> responseEntity = userController.findUserById(1);
         assertEquals(HttpStatus.FOUND, responseEntity.getStatusCode());
@@ -68,7 +71,8 @@ public class UserControllerTest {
 
     @Test
     public void testEditUser() throws ZenBookingException {
-        UserDto userDto = new UserDto(1, "Test User", "test@test.com", "password", ERole.USER, true);
+        List<Booking> bookings = new ArrayList<>();
+        UserDto userDto = new UserDto(1, "Test User", "test@test.com", "password", ERole.USER, bookings,true);
         doNothing().when(userService).editUser(anyInt(), any(UserDto.class));
         ResponseEntity<?> responseEntity = userController.editUser(1, userDto);
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
@@ -76,6 +80,7 @@ public class UserControllerTest {
 
     @Test
     public void testRemoveUser() throws ZenBookingException {
+
         doNothing().when(userService).removeUser(anyInt());
         ResponseEntity<?> responseEntity = userController.removeUser(1);
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());

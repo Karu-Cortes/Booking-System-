@@ -31,7 +31,7 @@ public record BookingController(
     @SecurityRequirement(name = "bearerAuth")
     public ResponseEntity<?> registerBooking(@RequestBody BookingDto bookingDto) {
         bookingService.registerBooking(bookingDto);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     /**

@@ -1,5 +1,6 @@
 package com.ZenBookings.demoZenBookings.application.service;
 
+import com.ZenBookings.demoZenBookings.domain.entity.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -38,7 +39,16 @@ public record JwtService(
      * @param  userDetails    los detalles del usuario para el token
      * @return               el token generado
      */
+//    private String generateToken(HashMap<String, Object> extraClaims, UserDetails userDetails) {
+//        return buildToken(extraClaims, userDetails, jwtExpiration);
+//    }
+
     private String generateToken(HashMap<String, Object> extraClaims, UserDetails userDetails) {
+        // Agrega información adicional del usuario, como roles y nombre completo, a los claims
+        if (userDetails instanceof User) {
+            extraClaims.put("name", ((User) userDetails).getName());
+            extraClaims.put("id", ((User) userDetails).getId());
+        }
         return buildToken(extraClaims, userDetails, jwtExpiration);
     }
 
